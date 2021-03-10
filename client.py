@@ -6,7 +6,7 @@ import time
 import pickle
 import zlib
 
-server_ip = '10.0.0.14'
+server_ip = '10.0.0.27'
 server_port = 8888
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((server_ip, server_port))
