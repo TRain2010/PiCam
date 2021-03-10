@@ -5,6 +5,7 @@ import struct
 import time
 import pickle
 import zlib
+from obj_detect import *
 
 server_ip = '10.0.0.27'
 server_port = 8888
@@ -23,6 +24,7 @@ encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 
 while True:
     ret, frame = cam.read()
+    result,objectInfo = getObjects(frame,0.45,0.2,objects=[])
     result, frame = cv2.imencode('.jpg', frame, encode_param)
 #    data = zlib.compress(pickle.dumps(frame, 0))
     data = pickle.dumps(frame, 0)
