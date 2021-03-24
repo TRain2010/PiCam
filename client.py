@@ -15,8 +15,8 @@ connection = client_socket.makefile('wb')
 
 cam = cv2.VideoCapture(0)
 
-cam.set(3, 640)
-cam.set(4, 480)
+cam.set(3, 300)
+cam.set(4, 400)
 
 
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
@@ -26,6 +26,9 @@ while True:
     result, frame = cv2.imencode('.jpg', frame, encode_param)
     data = pickle.dumps(frame, 0)
     size = len(data)
-    client_socket.sendall(struct.pack(">L", size) + data)
+    try:
+        client_socket.sendall(struct.pack(">L", size) + data)
+    except:
+        pass
 
 cam.release()

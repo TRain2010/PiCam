@@ -38,4 +38,5 @@ while True:
     frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
     result,objectInfo = getObjects(frame,0.45,0.2,objects=[])
     cv2.imshow('ImageWindow',frame)
+    print(data)
     cv2.waitKey(1)

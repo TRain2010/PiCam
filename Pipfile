@@ -6,8 +6,8 @@ name = "pypi"
 [packages]
 pillow = "*"
 google-cloud-vision = "*"
-picamera = "*"
 cryptography = "*"
+django = "*"
 
 [dev-packages]
 
