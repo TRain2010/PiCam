@@ -1,7 +1,11 @@
 import cv2
+import os
 
 classNames= []
-classFile = 'coco.names'
+classFile = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'coco.names')
+
+
+print("class file: " + classFile)
 with open(classFile,'rt') as f:
     classNames = f.read().rstrip('\n').split('\n')
 

@@ -15,11 +15,11 @@ connection = client_socket.makefile('wb')
 
 cam = cv2.VideoCapture(0)
 
-cam.set(3, 640)
-cam.set(4, 480)
+cam.set(3, 320)
+cam.set(4, 240)
 
 
-encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
 
 while True:
     ret, frame = cam.read()
