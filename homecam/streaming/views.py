@@ -16,7 +16,7 @@ import zlib
 # Create your views here.
 listen = False
 
-def generate():
+def generate(objects=[]):
     global listen
     if (not listen):
         HOST=''
@@ -40,8 +40,8 @@ def generate():
         data = data[msg_size:]
         frame=pickle.loads(frame_data, fix_imports=True, encoding="bytes")
         frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-        result,objectInfo = getObjects(frame,0.45,0.2,objects=[])
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+        result,objectInfo = getObjects(frame,0.65,0.2,objects=objects)
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 50]
         _, result = cv2.imencode('.jpg', result, encode_param)
         yield(b'--frame\r\n'
               b'Content-Type: image/jpg\r\n\r\n' + result.tobytes() + b'\r\n\r\n')
