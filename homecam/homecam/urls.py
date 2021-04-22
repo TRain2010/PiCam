@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from streaming.views import live_feed, setup, home
+from qrdemo.views import qrhome, get_qr
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('streaming/', live_feed, name='streaming'),
-    path('', home, name = 'home' )
+    path('', home, name = 'home' ),
+    path('qrhome/', qrhome, name='qrhome'),
+    path('get_qr/', get_qr, name='get_qr')
 ]
 

@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>QR Demo</title>
+  </head>
+  <body>
+    <h1>Set QR</h1>
+    <form method="get" action="{% url 'get_qr' %}">
+      <p>Input Text For the QR code</p>
+      <input id="myinput" type="text" name="qr_query">
+      <input type="submit" value="OK">
+  
+    </form>
+    <p>
+      name: {{name}}
+    </p>
+    <p>
+      <img src="{{ img }}">
+    </p>
+
+  </body>
+</html>
