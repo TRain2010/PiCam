@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators import gzip
 from django.http import StreamingHttpResponse, HttpResponse
-from .models import VideoFeeds
 from objdetect.obj_detect import getObjects
 
 import socket
@@ -16,7 +15,7 @@ import zlib
 # Create your views here.
 listen = False
 
-def generate(objects=[]):
+def generate(targets=[]):
     global listen
     if (not listen):
         HOST=''
@@ -40,8 +39,9 @@ def generate(objects=[]):
         data = data[msg_size:]
         frame=pickle.loads(frame_data, fix_imports=True, encoding="bytes")
         frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
-        result,objectInfo = getObjects(frame,0.65,0.2,objects=objects)
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 50]
+        result,objectInfo = getObjects(frame,0.45,0.2,objects=targets)
+        send_notification(objectInfo, targets)
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
         _, result = cv2.imencode('.jpg', result, encode_param)
         yield(b'--frame\r\n'
               b'Content-Type: image/jpg\r\n\r\n' + result.tobytes() + b'\r\n\r\n')
@@ -50,7 +50,7 @@ def generate(objects=[]):
 def live_feed(reqeust):
     #return HttpResponse("OK")
     try:
-        return StreamingHttpResponse(generate(), content_type="multipart/x-mixed-replace;boundary=frame")
+        return StreamingHttpResponse(generate(['person', 'tv', 'cat']), content_type="multipart/x-mixed-replace;boundary=frame")
     except:
         return HttpResponse("No streaming")
 
@@ -58,15 +58,10 @@ def live_feed(reqeust):
 def home(request):
     return render(request, 'streaming/index.html')
 
-
-def setup():
-    # HOST=''
-    # PORT=8000
-    # s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    # s.bind((HOST,PORT))
-    # print('Socket bind init')
-    # s.listen(10)
-    # print('Socket now init')
-
-    # conn,addr=s.accept()
+def setup(request):
     pass
+
+def send_notification(objects, targets):
+    for i in objects:
+        if i[1] in targets:
+            print(i[1])
